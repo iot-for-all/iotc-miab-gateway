@@ -1,6 +1,5 @@
 import { service, inject } from 'spryly';
 import { Server } from '@hapi/hapi';
-import { IIotCentralPluginModule } from '../plugins/iotCentralModule';
 import { bind } from '../utils';
 
 export const healthCheckInterval = 15;
@@ -19,20 +18,16 @@ export class HealthService {
     @inject('$server')
     private server: Server;
 
-    private iotCentralPluginModule: IIotCentralPluginModule;
-
     // private heathCheckStartTime = Date.now();
     // private failingStreak = 1;
 
-    public async init(): Promise<void> {
-        this.server.log(['HealthService', 'info'], 'initialize');
-
-        this.iotCentralPluginModule = this.server.settings.app.iotCentral;
-    }
-
     @bind
     public async checkHealthState(): Promise<number> {
-        const moduleHealth = await this.iotCentralPluginModule.getHealth();
+        if (!this.server.settings.app.iotCentral) {
+            return HealthState.Good;
+        }
+
+        const moduleHealth = await this.server.settings.app.iotCentral.getHealth();
 
         this.server.log(['HealthService', 'info'], `Health check state: ${HealthState[moduleHealth]}`);
 

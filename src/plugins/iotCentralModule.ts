@@ -7,10 +7,6 @@ import {
     DeviceMethodRequest,
     DeviceMethodResponse
 } from 'azure-iot-device';
-import * as fse from 'fs-extra';
-import {
-    basename as pathBasename
-} from 'path';
 import {
     arch as osArch,
     hostname as osHostname,
@@ -23,7 +19,6 @@ import {
     freemem as osFreeMem,
     loadavg as osLoadAvg
 } from 'os';
-import { v4 as uuidv4 } from 'uuid';
 import { HealthState } from '../services/health';
 import { bind, defer, sleep } from '../utils';
 
@@ -63,7 +58,7 @@ export interface IIotCentralPluginModule {
     moduleClient: ModuleClient;
     debugTelemetry(): boolean;
     getHealth(): Promise<HealthState>;
-    sendMeasurement(data: any, outputName?: string): Promise<void>;
+    sendMessage(data: any, outputName?: string): Promise<void>;
     updateModuleProperties(properties: any): Promise<void>;
     addDirectMethod(directMethodName: string, directMethodFunction: DirectMethodFunction): void;
     invokeDirectMethod(moduleId: string, methodName: string, payload: any, connectTimeout?: number, responseTimeout?: number): Promise<IDirectMethodResult>;
@@ -202,7 +197,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
                     [IotcEdgeHostDevicePropNames.SwVersion]: osVersion() || 'Unknown'
                 });
 
-                await this.sendMeasurement({
+                await this.sendMessage({
                     [IoTCentralModuleCapability.stIoTCentralClientState]: IoTCentralClientState.Connected,
                     [IoTCentralModuleCapability.stModuleState]: ModuleState.Active,
                     [IoTCentralModuleCapability.evModuleStarted]: 'Module initialization'
@@ -252,7 +247,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
 
                 healthTelemetry[IoTCentralModuleCapability.tlSystemHeartbeat] = healthState;
 
-                await this.sendMeasurement(healthTelemetry, IotcOutputName);
+                await this.sendMessage(healthTelemetry, IotcOutputName);
             }
 
             this.healthState = healthState;
@@ -275,7 +270,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
         return this.healthState;
     }
 
-    public async sendMeasurement(data: any, outputName?: string): Promise<void> {
+    public async sendMessage(data: any, outputName?: string): Promise<void> {
         if (!data || !this.moduleClient) {
             return;
         }
@@ -291,11 +286,11 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
             }
 
             if (this.debugTelemetry()) {
-                this.server.log([ModuleName, 'info'], `sendMeasurement: ${JSON.stringify(data, null, 4)}`);
+                this.server.log([ModuleName, 'info'], `sendMessage: ${JSON.stringify(data, null, 4)}`);
             }
         }
         catch (ex) {
-            this.server.log([ModuleName, 'error'], `sendMeasurement: ${ex.message}`);
+            this.server.log([ModuleName, 'error'], `sendMessage: ${ex.message}`);
         }
     }
 
@@ -409,7 +404,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
             this.moduleClient = await ModuleClient.fromEnvironment(Mqtt);
         }
         catch (ex) {
-            this.server.log([ModuleName, 'error'], `Failed to instantiate client interface from configuraiton: ${ex.message} `);
+            this.server.log([ModuleName, 'error'], `Failed to instantiate client interface from configuration: ${ex.message} `);
         }
 
         if (!this.moduleClient) {
@@ -588,7 +583,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
         this.server.log([ModuleName, 'info'], `restartModule`);
 
         try {
-            await this.sendMeasurement({
+            await this.sendMessage({
                 [IoTCentralModuleCapability.evModuleRestart]: reason,
                 [IoTCentralModuleCapability.stModuleState]: ModuleState.Inactive,
                 [IoTCentralModuleCapability.evModuleStopped]: 'Module restart'

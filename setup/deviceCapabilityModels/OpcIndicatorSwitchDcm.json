@@ -1,0 +1,84 @@
+{
+    "@context": [
+        "dtmi:iotcentral:context;2",
+        "dtmi:dtdl:context;2"
+    ],
+    "@type": [
+        "ModelDefinition",
+        "DeviceModel"
+    ],
+    "displayName": "OPC Indicator Switch for MiaB",
+    "capabilityModel": {
+        "@id": "dtmi:com:azureiot:model:IndicatorSwitch;1",
+        "@type": "Interface",
+        "contents": [],
+        "description": "OPC Indicator Switch for Manufacturing in a Box Model",
+        "displayName": "OPC Indicator Switch Model",
+        "extends": [
+            {
+                "@id": "dtmi:com:azureiot:IndicatorSwitch:Device;1",
+                "@type": [
+                    "Interface",
+                    "NamedInterface"
+                ],
+                "displayName": "OPC Device Interface",
+                "name": "com_azureiot_IndicatorSwitch_Device",
+                "contents": [
+                    {
+                        "@type": [
+                            "Telemetry",
+                            "State"
+                        ],
+                        "displayName": "IoT Central Client State",
+                        "name": "stIoTCentralClientState",
+                        "schema": {
+                            "@type": "Enum",
+                            "enumValues": [
+                                {
+                                    "displayName": "disconnected",
+                                    "enumValue": "disconnected",
+                                    "name": "disconnected"
+                                },
+                                {
+                                    "displayName": "connected",
+                                    "enumValue": "connected",
+                                    "name": "connected"
+                                }
+                            ],
+                            "valueSchema": "string"
+                        }
+                    },
+                    {
+                        "@type": "Property",
+                        "displayName": "Device Id",
+                        "name": "rpDeviceId",
+                        "schema": "string"
+                    },
+                    {
+                        "@type": "Property",
+                        "displayName": "Endpoint Url",
+                        "name": "rpEndpointUrl",
+                        "schema": "string"
+                    },
+                    {
+                        "@type": "Property",
+                        "displayName": "Debug Telemetry",
+                        "name": "wpDebugTelemetry",
+                        "schema": "boolean",
+                        "writable": true
+                    },
+                    {
+                        "@type": "Command",
+                        "displayName": "Turn on Indicator",
+                        "name": "cmTurnOnIndicator"
+                    },
+                    {
+                        "@type": "Command",
+                        "displayName": "Turn off Indicator",
+                        "name": "cmTurnOffIndicator"
+                    }
+                ]
+            }
+        ]
+    }
+}
