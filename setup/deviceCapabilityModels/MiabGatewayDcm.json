@@ -11,45 +11,33 @@
     ],
     "displayName": "Manufacturing In A Box Gateway",
     "capabilityModel": {
-        "@id": "dtmi:com:azureiot:model:MiabGw;1",
+        "@id": "dtmi:com:azureiot:miabgateway:edgedevice;1",
         "@type": "Interface",
-        "displayName": "Manufacturing In A Box Gateway Model",
+        "displayName": "Manufacturing In A Box Gateway",
         "contents": [
             {
-                "@id": "dtmi:com:azureiot:model:MiabGw:MiabGwModule;1",
                 "@type": [
                     "Relationship",
                     "EdgeModule"
                 ],
-                "displayName": "Manufacturing In A Box Gateway Module",
+                "displayName": "Manufacturing In A Box Gateway",
                 "maxMultiplicity": 1,
-                "name": "MiabGwModule",
+                "name": "miabgateway",
                 "target": [
                     {
-                        "@id": "dtmi:com:azureiot:MiabGwModule;1",
+                        "@id": "dtmi:com:azureiot:miabgateway:miabgatewaymodule;1",
                         "@type": "Interface",
-                        "displayName": "Manufacturing In A Box Gateway Module",
-                        "contents": [
-                            {
-                                "@id": "dtmi:com:azureiot:MiabGwModule:rel;1",
-                                "@type": [
-                                    "Relationship",
-                                    "GatewayDevice"
-                                ],
-                                "displayName": "rel",
-                                "name": "rel",
-                                "target": []
-                            }
-                        ],
+                        "displayName": "Manufacturing In A Box Gateway",
+                        "contents": [],
                         "extends": [
                             {
-                                "@id": "dtmi:com:azureiot:IoTCentralModule:DeviceInformation;1",
+                                "@id": "dtmi:com:azureiot:miabgateway:miabgateway_device_interface;1",
                                 "@type": [
                                     "Interface",
                                     "NamedInterface"
                                 ],
-                                "displayName": "IoT Central Module Device Information Interface",
-                                "name": "com_azureiot_IoTCentralModule_DeviceInformation",
+                                "displayName": "Manufacturing In A Box Gateway Device Interface",
+                                "name": "com_azureiot_miabgateway_miabgateway_device_interface",
                                 "contents": [
                                     {
                                         "@type": "Property",
@@ -83,111 +71,9 @@
                                     },
                                     {
                                         "@type": "Property",
-                                        "displayName": "Total memory",
-                                        "name": "totalMemory",
-                                        "schema": "long"
-                                    },
-                                    {
-                                        "@type": "Property",
                                         "displayName": "Software version",
                                         "name": "swVersion",
                                         "schema": "string"
-                                    }
-                                ]
-                            },
-                            {
-                                "@id": "dtmi:com:azureiot:IoTCentralModule:Settings;1",
-                                "@type": [
-                                    "Interface",
-                                    "NamedInterface"
-                                ],
-                                "displayName": "IoT Central Module Settings",
-                                "name": "com_azureiot_IoTCentralModule_Settings",
-                                "contents": [
-                                    {
-                                        "@type": "Property",
-                                        "displayName": "Debug Telemetry",
-                                        "name": "wpDebugTelemetry",
-                                        "schema": "boolean",
-                                        "writable": true
-                                    },
-                                    {
-                                        "@type": "Property",
-                                        "displayName": "Debug Routed Messages",
-                                        "name": "wpDebugRoutedMessage",
-                                        "schema": "boolean",
-                                        "writable": true
-                                    }
-                                ]
-                            },
-                            {
-                                "@id": "dtmi:com:azureiot:IoTCentralModule:ModuleInterface;1",
-                                "@type": [
-                                    "Interface",
-                                    "NamedInterface"
-                                ],
-                                "displayName": "IoT Central Module Interface",
-                                "name": "com_azureiot_IoTCentralModule_ModuleInterface",
-                                "contents": [
-                                    {
-                                        "@type": "Telemetry",
-                                        "displayName": "System Heartbeat",
-                                        "name": "tlSystemHeartbeat",
-                                        "schema": "integer"
-                                    },
-                                    {
-                                        "@type": "Telemetry",
-                                        "displayName": "Free Memory",
-                                        "name": "tlFreeMemory",
-                                        "schema": "long"
-                                    },
-                                    {
-                                        "@type": [
-                                            "Telemetry",
-                                            "State"
-                                        ],
-                                        "displayName": "IoT Central Client State",
-                                        "name": "stIoTCentralClientState",
-                                        "schema": {
-                                            "@type": "Enum",
-                                            "enumValues": [
-                                                {
-                                                    "displayName": "disconnected",
-                                                    "enumValue": "disconnected",
-                                                    "name": "disconnected"
-                                                },
-                                                {
-                                                    "displayName": "connected",
-                                                    "enumValue": "connected",
-                                                    "name": "connected"
-                                                }
-                                            ],
-                                            "valueSchema": "string"
-                                        }
-                                    },
-                                    {
-                                        "@type": [
-                                            "Telemetry",
-                                            "State"
-                                        ],
-                                        "displayName": "IoT Central Module State",
-                                        "name": "stModuleState",
-                                        "schema": {
-                                            "@type": "Enum",
-                                            "enumValues": [
-                                                {
-                                                    "displayName": "inactive",
-                                                    "enumValue": "inactive",
-                                                    "name": "inactive"
-                                                },
-                                                {
-                                                    "displayName": "active",
-                                                    "enumValue": "active",
-                                                    "name": "active"
-                                                }
-                                            ],
-                                            "valueSchema": "string"
-                                        }
                                     },
                                     {
                                         "@type": [
@@ -217,6 +103,13 @@
                                         "schema": "string"
                                     },
                                     {
+                                        "@type": "Property",
+                                        "displayName": "Debug Telemetry",
+                                        "name": "wpDebugTelemetry",
+                                        "schema": "boolean",
+                                        "writable": true
+                                    },
+                                    {
                                         "@type": "Command",
                                         "displayName": "Restart Gateway Module",
                                         "name": "cmRestartGatewayModule",
@@ -240,13 +133,13 @@
                                 ]
                             },
                             {
-                                "@id": "dtmi:com:azureiot:MiabGwModule:ModuleInterface;1",
+                                "@id": "dtmi:com:azureiot:miabgateway:ModuleInterface;1",
                                 "@type": [
                                     "Interface",
                                     "NamedInterface"
                                 ],
                                 "displayName": "Manufacturing In A Box Gateway Module Interface",
-                                "name": "com_azureiot_MiabGwModule_ModuleInterface",
+                                "name": "com_azureiot_miabgateway_ModuleInterface",
                                 "contents": [
                                     {
                                         "@type": [
@@ -292,15 +185,1914 @@
                 ]
             },
             {
-                "@id": "dtmi:com:azureiot:model:MiabGw:IndicatorSwitch;1",
+                "@type": [
+                    "Relationship",
+                    "EdgeModule"
+                ],
+                "displayName": "Azure Metrics Collector",
+                "maxMultiplicity": 1,
+                "name": "azuremetricscollector",
+                "target": [
+                    {
+                        "@id": "dtmi:com:azureiot:miabgateway:azure_metrics_collector;1",
+                        "@type": "Interface",
+                        "contents": [],
+                        "displayName": "Azure Metrics Collector",
+                        "extends": [
+                            {
+                                "@id": "dtmi:EdgeMetricsTemplate;1",
+                                "@type": [
+                                    "Interface",
+                                    "NamedInterface"
+                                ],
+                                "displayName": "IoT Edge Metrics Interface",
+                                "name": "com_azureiot_EdgeMetricsInterface",
+                                "contents": [
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:TimeGeneratedUtc;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Time Generated UTC"
+                                        },
+                                        "name": "TimeGeneratedUtc",
+                                        "schema": "dateTime"
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edge_device;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Edge device"
+                                        },
+                                        "name": "edge_device",
+                                        "schema": "string"
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:instance_number;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Run instance"
+                                        },
+                                        "name": "instance_number",
+                                        "schema": "string"
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_received_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total messages received"
+                                        },
+                                        "name": "edgehub_messages_received_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_received_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_received_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Total messages received"
+                                                    },
+                                                    "name": "Value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_received_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_received_total:schema:from_route_output;1",
+                                                    "displayName": {
+                                                        "en": "From route output"
+                                                    },
+                                                    "name": "from_route_output",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_queue_length;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Queue length"
+                                        },
+                                        "name": "edgehub_queue_length",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_queue_length:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_queue_length:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_queue_length:schema:priority;1",
+                                                    "displayName": {
+                                                        "en": "Priority"
+                                                    },
+                                                    "name": "priority",
+                                                    "schema": "long"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Reported properties update duration sum (secs)"
+                                        },
+                                        "name": "edgehub_reported_properties_update_duration_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_sum:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Reported properties update duration count (secs)"
+                                        },
+                                        "name": "edgehub_reported_properties_update_duration_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds_count:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Reported properties update duration (secs)"
+                                        },
+                                        "name": "edgehub_reported_properties_update_duration_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_update_duration_seconds:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message size in bytes sum"
+                                        },
+                                        "name": "edgehub_message_size_bytes_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message size in bytes count"
+                                        },
+                                        "name": "edgehub_message_size_bytes_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message size in bytes"
+                                        },
+                                        "name": "edgehub_message_size_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_size_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message send duration sum (secs)"
+                                        },
+                                        "name": "edgehub_message_send_duration_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_sum:schema:from_route_output;1",
+                                                    "displayName": {
+                                                        "en": "From route output"
+                                                    },
+                                                    "name": "from_route_output",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message send duration count (secs)"
+                                        },
+                                        "name": "edgehub_message_send_duration_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds_count:schema:from_route_output;1",
+                                                    "displayName": {
+                                                        "en": "From route output"
+                                                    },
+                                                    "name": "from_route_output",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message Send Duration (secs)"
+                                        },
+                                        "name": "edgehub_message_send_duration_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_send_duration_seconds:schema:from_route_output;1",
+                                                    "displayName": {
+                                                        "en": "From route output"
+                                                    },
+                                                    "name": "from_route_output",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Get Twin Duration Sum (secs)"
+                                        },
+                                        "name": "edgehub_gettwin_duration_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Get Twin Duration Count (secs)"
+                                        },
+                                        "name": "edgehub_gettwin_duration_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Get Twin Duration (secs)"
+                                        },
+                                        "name": "edgehub_gettwin_duration_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_duration_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Get Twin Total"
+                                        },
+                                        "name": "edgehub_gettwin_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_gettwin_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Messages Sent Total"
+                                        },
+                                        "name": "edgehub_messages_sent_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema:priority;1",
+                                                    "displayName": {
+                                                        "en": "Priority"
+                                                    },
+                                                    "name": "priority",
+                                                    "schema": "long"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_messages_sent_total:schema:from_route_output;1",
+                                                    "displayName": {
+                                                        "en": "From route output"
+                                                    },
+                                                    "name": "from_route_output",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total Reported Properties"
+                                        },
+                                        "name": "edgehub_reported_properties_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_reported_properties_total:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_memory_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total Memory in Bytes"
+                                        },
+                                        "name": "edgeAgent_total_memory_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_memory_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_memory_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_memory_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_memory_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Used Memory in Bytes"
+                                        },
+                                        "name": "edgeAgent_used_memory_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_memory_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_memory_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_memory_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_out_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total Network Bytes Out"
+                                        },
+                                        "name": "edgeAgent_total_network_out_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_out_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_out_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_out_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_running_correctly_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total Time running Correctly (secs)"
+                                        },
+                                        "name": "edgeAgent_total_time_running_correctly_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_running_correctly_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_running_correctly_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_running_correctly_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Command Latency Sum (secs)"
+                                        },
+                                        "name": "edgeAgent_command_latency_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_sum:schema:command;1",
+                                                    "displayName": {
+                                                        "en": "Command"
+                                                    },
+                                                    "name": "command",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Command Latency Count (secs)"
+                                        },
+                                        "name": "edgeAgent_command_latency_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds_count:schema:command;1",
+                                                    "displayName": {
+                                                        "en": "Command"
+                                                    },
+                                                    "name": "command",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Command Latency (secs)"
+                                        },
+                                        "name": "edgeAgent_command_latency_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_command_latency_seconds:schema:command;1",
+                                                    "displayName": {
+                                                        "en": "Command"
+                                                    },
+                                                    "name": "command",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iotedged_uptime_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "iotedged Uptime (secs)"
+                                        },
+                                        "name": "edgeAgent_iotedged_uptime_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iotedged_uptime_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iotedged_uptime_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_space_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total disk space in bytes"
+                                        },
+                                        "name": "edgeAgent_total_disk_space_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_space_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_space_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_space_bytes:schema:disk_name;1",
+                                                    "displayName": {
+                                                        "en": "Disk name"
+                                                    },
+                                                    "name": "disk_name",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_start_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Module start total"
+                                        },
+                                        "name": "edgeAgent_module_start_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_start_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_start_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_start_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Used CPU percent sum"
+                                        },
+                                        "name": "edgeAgent_used_cpu_percent_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Used CPU percent count"
+                                        },
+                                        "name": "edgeAgent_used_cpu_percent_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Used CPU percent"
+                                        },
+                                        "name": "edgeAgent_used_cpu_percent",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_used_cpu_percent:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_available_disk_space_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Available disk space bytes"
+                                        },
+                                        "name": "edgeAgent_available_disk_space_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_available_disk_space_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_available_disk_space_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_available_disk_space_bytes:schema:disk_name;1",
+                                                    "displayName": {
+                                                        "en": "Disk name"
+                                                    },
+                                                    "name": "disk_name",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_created_pids_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Created PIDS total"
+                                        },
+                                        "name": "edgeAgent_created_pids_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_created_pids_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_created_pids_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_created_pids_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_host_uptime_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Host Uptime (secs)"
+                                        },
+                                        "name": "edgeAgent_host_uptime_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_host_uptime_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_host_uptime_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_stop_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Module stop total"
+                                        },
+                                        "name": "edgeAgent_module_stop_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_stop_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_stop_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_module_stop_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_expected_running_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total time expected running (secs)"
+                                        },
+                                        "name": "edgeAgent_total_time_expected_running_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_expected_running_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_expected_running_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_time_expected_running_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_write_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total disk write in bytes"
+                                        },
+                                        "name": "edgeAgent_total_disk_write_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_write_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_write_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_write_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_in_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total network in bytes"
+                                        },
+                                        "name": "edgeAgent_total_network_in_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_in_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_in_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_network_in_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_read_bytes;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Total disk read in bytes"
+                                        },
+                                        "name": "edgeAgent_total_disk_read_bytes",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_read_bytes:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_read_bytes:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_total_disk_read_bytes:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message process duration sum (secs)"
+                                        },
+                                        "name": "edgehub_message_process_duration_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum:schema:priority;1",
+                                                    "displayName": {
+                                                        "en": "Priority"
+                                                    },
+                                                    "name": "priority",
+                                                    "schema": "long"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_sum:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message process duration count (secs)"
+                                        },
+                                        "name": "edgehub_message_process_duration_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count:schema:priority;1",
+                                                    "displayName": {
+                                                        "en": "Priority"
+                                                    },
+                                                    "name": "priority",
+                                                    "schema": "long"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds_count:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Message process duration (secs)"
+                                        },
+                                        "name": "edgehub_message_process_duration_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema:priority;1",
+                                                    "displayName": {
+                                                        "en": "Priority"
+                                                    },
+                                                    "name": "priority",
+                                                    "schema": "long"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_message_process_duration_seconds:schema:to;1",
+                                                    "displayName": {
+                                                        "en": "To"
+                                                    },
+                                                    "name": "to",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_connected_clients;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Connected clients"
+                                        },
+                                        "name": "edgehub_connected_clients",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_connected_clients:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_connected_clients:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Offline duration sum (secs)"
+                                        },
+                                        "name": "edgehub_offline_duration_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_sum:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Offline duration count (secs)"
+                                        },
+                                        "name": "edgehub_offline_duration_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds_count:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_client_connect_success_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Client connect success total"
+                                        },
+                                        "name": "edgehub_client_connect_success_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_client_connect_success_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_client_connect_success_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_client_connect_success_total:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iothub_syncs_total;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "IoTHub syncs total"
+                                        },
+                                        "name": "edgeAgent_iothub_syncs_total",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iothub_syncs_total:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_iothub_syncs_total:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_metadata;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Metadata"
+                                        },
+                                        "name": "edgeAgent_metadata",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_metadata:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_metadata:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_sum;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Deployment time Sum (secs)"
+                                        },
+                                        "name": "edgeAgent_deployment_time_seconds_sum",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_sum:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_sum:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_count;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Deployment time count (secs)"
+                                        },
+                                        "name": "edgeAgent_deployment_time_seconds_count",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_count:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds_count:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Deployment time (secs)"
+                                        },
+                                        "name": "edgeAgent_deployment_time_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgeAgent_deployment_time_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds;1",
+                                        "@type": "Telemetry",
+                                        "displayName": {
+                                            "en": "Offline duration (secs)"
+                                        },
+                                        "name": "edgehub_offline_duration_seconds",
+                                        "schema": {
+                                            "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds:schema;1",
+                                            "@type": "Object",
+                                            "displayName": {
+                                                "en": "Object"
+                                            },
+                                            "fields": [
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds:schema:value;1",
+                                                    "displayName": {
+                                                        "en": "Value"
+                                                    },
+                                                    "name": "value",
+                                                    "schema": "double"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds:schema:from;1",
+                                                    "displayName": {
+                                                        "en": "From"
+                                                    },
+                                                    "name": "from",
+                                                    "schema": "string"
+                                                },
+                                                {
+                                                    "@id": "dtmi:EdgeMetricsTemplate:edgehub_offline_duration_seconds:schema:quantile;1",
+                                                    "displayName": {
+                                                        "en": "Quantile"
+                                                    },
+                                                    "name": "quantile",
+                                                    "schema": "double"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
                 "@type": [
                     "Relationship",
                     "GatewayDevice"
                 ],
                 "displayName": "OPC Indicator Switch",
-                "name": "IndicatorSwitch",
+                "name": "indicatorswitch",
                 "target": [
-                    "dtmi:com:azureiot:model:IndicatorSwitch;1"
+                    "dtmi:com:azureiot:indicatorswitch:device;1"
                 ]
             }
         ]

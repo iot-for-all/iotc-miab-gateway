@@ -82,22 +82,12 @@ interface IProvisionResult {
     opcDevice: OpcDevice;
 }
 
-enum MiabGatewaySettings {
-    wpDebugTelemetry = 'wpDebugTelemetry',
-    wpDebugRoutedMessage = 'wpDebugRoutedMessage'
-}
-
 enum MiabGatewayCapability {
     evCreateOpcDevice = 'evCreateOpcDevice',
     evDeleteOpcDevice = 'evDeleteOpcDevice',
     cmProvisionOpcDevice = 'cmProvisionOpcDevice',
     cmDeprovisionOpcDevice = 'cmDeprovisionOpcDevice',
     cmTestOpcPublisherApi = 'cmTestOpcPublisherApi'
-}
-
-interface IMiabGatewaySettings {
-    [MiabGatewaySettings.wpDebugTelemetry]: boolean;
-    [MiabGatewaySettings.wpDebugRoutedMessage]: boolean;
 }
 
 @service('miabGateway')
@@ -107,10 +97,6 @@ export class MiabGatewayService {
 
     private healthState = HealthState.Good;
     private iotCentralPluginModule: IIotCentralPluginModule;
-    private moduleSettings: IMiabGatewaySettings = {
-        [MiabGatewaySettings.wpDebugTelemetry]: true,
-        [MiabGatewaySettings.wpDebugRoutedMessage]: true
-    };
     private opcDeviceMap = new Map<string, OpcDevice>();
 
     public async init(): Promise<void> {
@@ -136,21 +122,11 @@ export class MiabGatewayService {
                     continue;
                 }
 
-                const value = desiredChangedSettings[setting];
+                // const value = desiredChangedSettings[setting];
 
                 switch (setting) {
-                    case MiabGatewaySettings.wpDebugTelemetry:
-                    case MiabGatewaySettings.wpDebugRoutedMessage:
-                        patchedProperties[setting] = {
-                            value: this.moduleSettings[setting] = value || false,
-                            ac: 200,
-                            ad: 'completed',
-                            av: desiredChangedSettings['$version']
-                        };
-                        break;
-
                     default:
-                        this.server.log([ModuleName, 'error'], `Received desired property change for unknown setting '${setting}'`);
+                        this.server.log([ModuleName, 'warning'], `Received desired property change for unknown setting '${setting}'`);
                         break;
                 }
             }
@@ -181,7 +157,7 @@ export class MiabGatewayService {
 
             const messageJson = JSON.parse(messageData);
 
-            if (this.moduleSettings[MiabGatewaySettings.wpDebugRoutedMessage] === true) {
+            if (this.iotCentralPluginModule.debugTelemetry()) {
                 if (message.properties?.propertyList) {
                     this.server.log([ModuleName, 'info'], `Routed message properties: ${JSON.stringify(message.properties?.propertyList, null, 4)}`);
                 }

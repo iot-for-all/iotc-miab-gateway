@@ -9,45 +9,21 @@
     ],
     "displayName": "OPC Indicator Switch for MiaB",
     "capabilityModel": {
-        "@id": "dtmi:com:azureiot:model:IndicatorSwitch;1",
+        "@id": "dtmi:com:azureiot:indicatorswitch:device;1",
         "@type": "Interface",
         "contents": [],
-        "description": "OPC Indicator Switch for Manufacturing in a Box Model",
-        "displayName": "OPC Indicator Switch Model",
+        "description": "OPC Indicator Switch for Manufacturing in a Box",
+        "displayName": "OPC Indicator Switch Device",
         "extends": [
             {
-                "@id": "dtmi:com:azureiot:IndicatorSwitch:Device;1",
+                "@id": "dtmi:com:azureiot:indicatorswitch:deviceinterface;1",
                 "@type": [
                     "Interface",
                     "NamedInterface"
                 ],
                 "displayName": "OPC Device Interface",
-                "name": "com_azureiot_IndicatorSwitch_Device",
+                "name": "com_azureiot_indicatorswitch_Device",
                 "contents": [
-                    {
-                        "@type": [
-                            "Telemetry",
-                            "State"
-                        ],
-                        "displayName": "IoT Central Client State",
-                        "name": "stIoTCentralClientState",
-                        "schema": {
-                            "@type": "Enum",
-                            "enumValues": [
-                                {
-                                    "displayName": "disconnected",
-                                    "enumValue": "disconnected",
-                                    "name": "disconnected"
-                                },
-                                {
-                                    "displayName": "connected",
-                                    "enumValue": "connected",
-                                    "name": "connected"
-                                }
-                            ],
-                            "valueSchema": "string"
-                        }
-                    },
                     {
                         "@type": "Property",
                         "displayName": "Device Id",

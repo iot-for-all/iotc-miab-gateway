@@ -18,13 +18,7 @@ interface IClientConnectResult {
     clientConnectionMessage: string;
 }
 
-enum IoTCentralClientState {
-    Disconnected = 'disconnected',
-    Connected = 'connected'
-}
-
 export enum OpcDeviceCapability {
-    stIoTCentralClientState = 'stIoTCentralClientState',
     rpDeviceId = 'rpDeviceId',
     rpEndpointUrl = 'rpEndpointUrl',
     wpDebugTelemetry = 'wpDebugTelemetry',
@@ -72,10 +66,6 @@ export class OpcDevice {
                 await this.deferredStart.promise;
 
                 await this.deviceReady();
-
-                await this.sendMessage({
-                    [OpcDeviceCapability.stIoTCentralClientState]: IoTCentralClientState.Connected
-                });
             }
         }
         catch (ex) {

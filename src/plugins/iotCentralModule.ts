@@ -15,7 +15,6 @@ import {
     release as osRelease,
     version as osVersion,
     cpus as osCpus,
-    totalmem as osTotalMem,
     freemem as osFreeMem,
     loadavg as osLoadAvg
 } from 'os';
@@ -94,7 +93,6 @@ interface ISystemProperties {
     cpuModel: string;
     cpuCores: number;
     cpuUsage: number;
-    totalMemory: number;
     freeMemory: number;
 }
 
@@ -104,18 +102,7 @@ enum IotcEdgeHostDevicePropNames {
     Platform = 'platform',
     OsType = 'osType',
     OsName = 'osName',
-    TotalMemory = 'totalMemory',
     SwVersion = 'swVersion'
-}
-
-enum IoTCentralClientState {
-    Disconnected = 'disconnected',
-    Connected = 'connected'
-}
-
-enum ModuleState {
-    Inactive = 'inactive',
-    Active = 'active'
 }
 
 interface IRestartGatewayModuleCommandRequestParams {
@@ -129,10 +116,6 @@ export interface IModuleCommandResponse {
 }
 
 enum IoTCentralModuleCapability {
-    tlSystemHeartbeat = 'tlSystemHeartbeat',
-    tlFreeMemory = 'tlFreeMemory',
-    stIoTCentralClientState = 'stIoTCentralClientState',
-    stModuleState = 'stModuleState',
     evModuleStarted = 'evModuleStarted',
     evModuleStopped = 'evModuleStopped',
     evModuleRestart = 'evModuleRestart',
@@ -153,7 +136,7 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
     private healthState = HealthState.Good;
     private healthCheckFailStreak = 0;
     private moduleSettings: IIoTCentralModuleSettings = {
-        [IoTCentralModuleCapability.wpDebugTelemetry]: false
+        [IoTCentralModuleCapability.wpDebugTelemetry]: true
     };
 
     constructor(server: Server, options: IIotCentralPluginModuleOptions) {
@@ -183,8 +166,6 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
 
                 this.healthCheckRetries = Number(process.env.healthCheckRetries) || defaultHealthCheckRetries;
 
-                const systemProperties = await this.getSystemProperties();
-
                 this.addDirectMethod(IoTCentralModuleCapability.cmRestartGatewayModule, this.handleDirectMethod);
 
                 await this.updateModuleProperties({
@@ -193,13 +174,10 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
                     [IotcEdgeHostDevicePropNames.Platform]: osPlatform() || 'Unknown',
                     [IotcEdgeHostDevicePropNames.OsType]: osType() || 'Unknown',
                     [IotcEdgeHostDevicePropNames.OsName]: osRelease() || 'Unknown',
-                    [IotcEdgeHostDevicePropNames.TotalMemory]: systemProperties.totalMemory || 0,
                     [IotcEdgeHostDevicePropNames.SwVersion]: osVersion() || 'Unknown'
                 });
 
                 await this.sendMessage({
-                    [IoTCentralModuleCapability.stIoTCentralClientState]: IoTCentralClientState.Connected,
-                    [IoTCentralModuleCapability.stModuleState]: ModuleState.Active,
                     [IoTCentralModuleCapability.evModuleStarted]: 'Module initialization'
                 }, IotcOutputName);
             }
@@ -230,11 +208,8 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
 
         try {
             if (healthState === HealthState.Good) {
-                const healthTelemetry = {};
                 const systemProperties = await this.getSystemProperties();
                 const freeMemory = systemProperties?.freeMemory || 0;
-
-                healthTelemetry[IoTCentralModuleCapability.tlFreeMemory] = freeMemory;
 
                 // TODO:
                 // Find the right threshold for this metric
@@ -244,10 +219,6 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
                 else {
                     healthState = await this.options.onHealth();
                 }
-
-                healthTelemetry[IoTCentralModuleCapability.tlSystemHeartbeat] = healthState;
-
-                await this.sendMessage(healthTelemetry, IotcOutputName);
             }
 
             this.healthState = healthState;
@@ -585,7 +556,6 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
         try {
             await this.sendMessage({
                 [IoTCentralModuleCapability.evModuleRestart]: reason,
-                [IoTCentralModuleCapability.stModuleState]: ModuleState.Inactive,
                 [IoTCentralModuleCapability.evModuleStopped]: 'Module restart'
             }, IotcOutputName);
 
@@ -610,7 +580,6 @@ class IotCentralPluginModule implements IIotCentralPluginModule {
             cpuModel: cpus[0]?.model || 'Unknown',
             cpuCores: cpus?.length || 0,
             cpuUsage: cpuUsageSamples[0],
-            totalMemory: osTotalMem() / 1024,
             freeMemory: osFreeMem() / 1024
         };
     }
